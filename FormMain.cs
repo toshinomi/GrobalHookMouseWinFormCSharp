@@ -17,7 +17,6 @@ namespace GrobalHookMouseWinFormCSharp
     {
         private static IntPtr m_hHook = IntPtr.Zero;
         MouseHook.HookProcedureDelegate m_proc;
-        private const int WH_MOUSE_LL = 14;
 
         public FormMain()
         {
@@ -41,11 +40,12 @@ namespace GrobalHookMouseWinFormCSharp
             using (Process process = Process.GetCurrentProcess())
             using (ProcessModule processModule = process.MainModule)
             {
-                m_hHook = MouseHook.SetWindowsHookEx(WH_MOUSE_LL, _proc, MouseHook.GetModuleHandle(processModule.ModuleName), 0);
+                m_hHook = MouseHook.SetWindowsHookEx(MouseHook.WH_MOUSE_LL, _proc, MouseHook.GetModuleHandle(processModule.ModuleName), 0);
                 if (m_hHook == IntPtr.Zero)
                 {
                     {
                         MessageBox.Show("SetWindowsHookEx Failed.");
+                        bResult = false;
                     }
                 }
             }
@@ -59,6 +59,8 @@ namespace GrobalHookMouseWinFormCSharp
             {
                 MessageBox.Show("UnhookWindowsHookEx Failed.");
             }
+
+            return;
         }
 
         public IntPtr MouseHookProc(int _nCode, IntPtr _wParam, IntPtr _lParam)
@@ -70,6 +72,7 @@ namespace GrobalHookMouseWinFormCSharp
                 String strText = "x = " + mouseHookStruct.pt.x.ToString("d") + " : y = " + mouseHookStruct.pt.y.ToString("d");
                 this.Text = strText;
             }
+
             return MouseHook.CallNextHookEx(m_hHook, _nCode, _wParam, _lParam);
         }
     }

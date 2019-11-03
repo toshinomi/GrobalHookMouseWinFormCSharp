@@ -9,6 +9,8 @@ namespace GrobalHook
 {
     public static class MouseHook
     {
+        public const int WH_MOUSE_LL = 14;
+
         public delegate IntPtr HookProcedureDelegate(int _nCode, IntPtr _wParam, IntPtr _lParam);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]

@@ -9,19 +9,19 @@ namespace GrobalHook
 {
     public static class MouseHook
     {
-        public delegate IntPtr HookProcedureDelegate(int nCode, IntPtr wParam, IntPtr lParam);
+        public delegate IntPtr HookProcedureDelegate(int _nCode, IntPtr _wParam, IntPtr _lParam);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
-        public static extern IntPtr SetWindowsHookEx(int idHook, HookProcedureDelegate lpfn, IntPtr hInstance, int threadId);
+        public static extern IntPtr SetWindowsHookEx(int _nHook, HookProcedureDelegate _lpfn, IntPtr _hInstance, int _nThreadId);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
-        public static extern bool UnhookWindowsHookEx(IntPtr idHook);
+        public static extern bool UnhookWindowsHookEx(IntPtr _hook);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
-        public static extern IntPtr CallNextHookEx(IntPtr idHook, int nCode, IntPtr wParam, IntPtr lParam);
+        public static extern IntPtr CallNextHookEx(IntPtr _hook, int _nCode, IntPtr _wParam, IntPtr _lParam);
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern IntPtr GetModuleHandle(String lpModuleName);
+        public static extern IntPtr GetModuleHandle(String _strModuleName);
 
         [StructLayout(LayoutKind.Sequential)]
         public struct POINT
